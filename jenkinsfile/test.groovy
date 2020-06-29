@@ -14,7 +14,7 @@ pipeline {
                             sh "echo '${password}' | sudo -S docker stop isng"
                             sh "echo '${password}' | sudo -S container rm isng"
                         } catch (Exception e) {
-                            print 'container not exist, skip clean'
+                            print 'skip clean'
                         }
                     }
                 }
@@ -26,7 +26,7 @@ pipeline {
                               extensions                       : [[$class           : 'RelativeTargetDirectory',
                                                                    relativeTargetDir: 'auto']],
                               submoduleCfg                     : [],
-                              userRemoteConfigs                : [[credentialsId: 'AlyonaZaichenkoGit', url: 'https://github.com/A1yona/CICD.git']]])
+                              userRemoteConfigs                : [[credentialsId: 'AlyonaZaichenkoGit', url: 'https://github.com/A1yona/DevOps.git']]])
                 }
             }
         }
