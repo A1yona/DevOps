@@ -1,7 +1,7 @@
 pipeline {
     agent{node('master')}
     stages {
-        stage('Clean workspace & Download project') {
+        stage('Download project') {
             steps {
                 script {
                     cleanWs()
@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Build & Run docker image'){
+        stage('Run docker image'){
             steps {
                 script {
                     withCredntials([
@@ -44,7 +44,7 @@ pipeline {
                 }
             }
         }
-        stage('Get stats & write to file'){
+        stage('Get stats'){
             steps{
                 script{
                     withCredntials([
