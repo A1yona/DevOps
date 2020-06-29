@@ -39,7 +39,7 @@ pipeline {
                             passwordVariable: 'password')
                     ]) {
                         sh "echo '${password}' | sudo -S docker build ${WORKSPACE}/auto -t zaichenko_a_nginx"
-                        sh "echo '${password}' | sudo -S docker run -d -p 8176:80 --name zav_pract -v /home/adminci/is_mount_dir:/stat_dir zaichenko_a_nginx"
+                        sh "echo '${password}' | sudo -S docker run -d -p 8156:80 --name zav_pract -v /home/adminci/is_mount_dir:/stat_dir zaichenko_a_nginx"
                     }
                 }
             }
