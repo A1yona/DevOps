@@ -11,10 +11,10 @@ pipeline {
                             passwordVariable: 'password')
                     ]) {
                         try {
-                            sh "echo '${password}' | sudo -S docker stop isng"
-                            sh "echo '${password}' | sudo -S container rm isng"
+                            sh "echo '${password}' | sudo -S docker stop zav_pract"
+                            sh "echo '${password}' | sudo -S container rm zav_pract"
                         } catch (Exception e) {
-                            print 'skip clean'
+                            print 'skip cleanup, container does not exist'
                         }
                     }
                 }
@@ -39,7 +39,7 @@ pipeline {
                                     passwordVariable: 'password')
                     ]) {
                         sh "echo '${password}' | sudo -S docker build ${WORKSPACE}/auto -t zaichenko_a_nginx"
-                        sh "echo '${password}' | sudo -S docker run -d -p 8456:80 --name isng -v /home/adminci/is_mount_dir:/stat_dir zaichenko_a_nginx"
+                        sh "echo '${password}' | sudo -S docker run -d -p 8456:80 --name zav_pract -v /home/adminci/is_mount_dir:/stat_dir zaichenko_a_nginx"
                     }
                 }
             }
@@ -52,8 +52,8 @@ pipeline {
                                     usernameVariable: 'username',
                                     passwordVariable: 'password')
                     ]) {
-                        sh "echo '${password}' | sudo -S docker exec -t isng bash -c 'df -h > /stat_dir/stats.txt'"
-                        sh "echo '${password}' | sudo -S docker exec -t isng bash -c 'top -n 1 -b >> /stat_dir/stats.txt'"
+                        sh "echo '${password}' | sudo -S docker exec -t zav_pract bash -c 'df -h > /stat_dir/stats.txt'"
+                        sh "echo '${password}' | sudo -S docker exec -t zav_pract bash -c 'top -n 1 -b >> /stat_dir/stats.txt'"
                     }
                 }
 
