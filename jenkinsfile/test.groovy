@@ -40,6 +40,7 @@ pipeline {
                     ]) {
                         sh "echo '${password}' | sudo -S docker build ${WORKSPACE}/auto -t zaichenko_a_nginx"
                         sh "echo '${password}' | sudo -S docker run -d -p 8156:80 --name zav_pract -v /home/adminci/zav_dir:/stat_dir zaichenko_a_nginx"
+						currentBuild.result = 'FAILURE'
                     }
                 }
             }
@@ -54,6 +55,21 @@ pipeline {
                     ]) {
                         sh "echo '${password}' | sudo -S docker exec -t zav_pract bash -c 'df -h > /stat_dir/stats.txt'"
                         sh "echo '${password}' | sudo -S docker exec -t zav_pract bash -c 'top -n 1 -b >> /stat_dir/stats.txt'"
+                    }
+                }
+
+            }
+        }
+		stage('Stop docker container'){
+            steps{
+                script{
+                    withCredentials([
+                            usernamePassword(credentialsId: 'srv_sudo',
+                            usernameVariable: 'username',
+                            passwordVariable: 'password')
+                    ]) {
+                        sh "echo '${password}' | sudo -S docker stop zav_pract"
+                        sh "echo '${password}' | sudo -S container rm zav_pract"
                     }
                 }
 
