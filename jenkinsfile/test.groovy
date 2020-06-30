@@ -45,21 +45,6 @@ pipeline {
                 }
             }
         }
-        stage('Get stats'){
-            steps{
-                script{
-                    withCredentials([
-                            usernamePassword(credentialsId: 'srv_sudo',
-                            usernameVariable: 'username',
-                            passwordVariable: 'password')
-                    ]) {
-                        sh "echo '${password}' | sudo -S docker exec -t zav_pract bash -c 'df -h > /stat_dir/stats.txt'"
-                        sh "echo '${password}' | sudo -S docker exec -t zav_pract bash -c 'top -n 1 -b >> /stat_dir/stats.txt'"
-                    }
-                }
-
-            }
-        }
 		stage('Stop docker container'){
             steps{
                 script{
@@ -75,5 +60,21 @@ pipeline {
 
             }
         }
+        stage('Get stats'){
+            steps{
+                script{
+                    withCredentials([
+                            usernamePassword(credentialsId: 'srv_sudo',
+                            usernameVariable: 'username',
+                            passwordVariable: 'password')
+                    ]) {
+                        sh "echo '${password}' | sudo -S docker exec -t zav_pract bash -c 'df -h > /stat_dir/stats.txt'"
+                        sh "echo '${password}' | sudo -S docker exec -t zav_pract bash -c 'top -n 1 -b >> /stat_dir/stats.txt'"
+                    }
+                }
+
+            }
+        }
+		
     }
 }
