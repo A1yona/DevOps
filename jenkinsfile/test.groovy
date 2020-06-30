@@ -54,7 +54,7 @@ pipeline {
                             passwordVariable: 'password')
                     ]) {
                         sh "echo '${password}' | sudo -S docker stop zav_pract"
-                        sh "echo '${password}' | sudo -S container rm zav_pract"
+                        sh "echo '${password}' | sudo -S docker rm zav_pract"
                     }
                 }
 
